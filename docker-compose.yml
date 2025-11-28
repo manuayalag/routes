@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # Base de datos PostgreSQL
+  db:
+    image: postgres:15
+    container_name: dashboard_db
+    environment:
+      POSTGRES_USER: dashboard
+      POSTGRES_PASSWORD: dashboard123
+      POSTGRES_DB: dashboard_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - dashboard_network
+
+  # Backend FastAPI
+  backend:
+    build: ./backend
+    container_name: dashboard_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=dashboard
+      - POSTGRES_PASSWORD=dashboard123
+      - POSTGRES_DB=dashboard_db
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+    networks:
+      - dashboard_network
+
+  # Frontend React
+  frontend:
+    build: ./frontend
+    container_name: dashboard_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - dashboard_network
+
+volumes:
+  postgres_data:
+
+networks:
+  dashboard_network:
+    driver: bridge
