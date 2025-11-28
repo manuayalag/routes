@@ -1,3 +1,5 @@
+const API_BASE = import.meta.env.VITE_API_BASE || '';
+
 export const getVentasPorRouteDetail = async (
   routeDetailId: number,
   onlyEventType?: number,
@@ -9,7 +11,7 @@ export const getVentasPorRouteDetail = async (
   if (fechaInicio) qs.push(`fecha_inicio=${encodeURIComponent(fechaInicio)}`);
   if (fechaFin) qs.push(`fecha_fin=${encodeURIComponent(fechaFin)}`);
   const q = qs.length ? `?${qs.join('&')}` : '';
-  const res = await fetch(`/route_detail/${routeDetailId}/ventas${q}`);
+  const res = await fetch(`${API_BASE}/route_detail/${routeDetailId}/ventas${q}`);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 };

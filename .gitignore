@@ -1,0 +1,66 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vite / build
+dist/
+build/
+.env
+.env.*
+.env.local
+.env.production
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+.venv/
+venv/
+.venv/*
+*.egg-info/
+
+# Backend secrets (do NOT commit .env)
+backend/.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Logs
+logs/
+*.log
+
+# Temporary
+*.tmp
+*.temp
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Git backup from previous steps
+.git-backup/
+
+# Misc
+coverage/
+.pnp/
+.pnp.js
+
+# Ignore local environment folders
+*.local
+
+# Ignore generated mapbox token caches if any
+mapbox_token*

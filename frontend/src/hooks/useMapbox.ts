@@ -6,6 +6,13 @@ export function useMapbox(token?: string, defaultStyle?: string, debug = false) 
 
   useEffect(() => {
     if (token) mapboxgl.accessToken = token;
+    // Intentar desactivar telemetría/analytics para evitar POST a events.mapbox.com
+    try {
+      // Algunas versiones exponen setTelemetryEnabled
+      (mapboxgl as any).setTelemetryEnabled?.(false);
+    } catch (e) {
+      // ignore
+    }
     return () => {
       if (mapRef.current) {
         try { mapRef.current.remove(); } catch (e) { /* ignore */ }
